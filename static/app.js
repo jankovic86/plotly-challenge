@@ -49,3 +49,15 @@ function buildCharts(samples) {
     });
 }
 
+function buildMetadata(samples) {
+    d3.json("data/samples.json").then(function (data) {
+        var metadata = data.metadata;
+        var filtered = metadata.filter(sampleobject => sampleobject.id == samples);
+        var result = filtered[0]
+        var PANEL = d3.select("#sample-metadata");
+        PANEL.html("");
+        Object.entries(result).forEach(([key, value]) => {
+            PANEL.append("h6").text(`${key}: ${value}`);
+        });
+    });
+}
