@@ -61,3 +61,27 @@ function buildMetadata(samples) {
         });
     });
 }
+
+function init() {
+    var selector = d3.select("#selDataset");
+
+    d3.json("data/samples.json").then(function (data) {
+        var names = data.names;
+        names.forEach(function (sample) {
+            selector
+                .append("option")
+                .text(sample)
+                .property("value", sample);
+        });
+
+        const firstSample = names[0];
+        buildCharts(firstSample);
+        buildMetadata(firstSample);
+    });
+}
+
+function optionChanged(newSample) {
+    buildCharts(newSample);
+    buildMetadata(newSample);
+}
+init();
